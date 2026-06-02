@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/usr/local/include",
+                "/usr/include"
+            ],
+            "defines": [
+                "NOMINMAX"
+            ],
+            "compilerPath": "/usr/bin/g++",
+            "compilerArgs": [
+                "-I/usr/local/include"
+            ],
+            "cStandard": "c17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "linux-gcc-x64"
+        }
+    ],
+    "version": 4
+}
