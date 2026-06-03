@@ -1,5 +1,6 @@
 #pragma once
 
+#include <mymuduo/EventLoop.h>
 #include <google/protobuf/service.h>
 
 // 框架提供的专门发布rpc服务的网络对象类
@@ -11,4 +12,12 @@ public:
 
     // 启动rpc服务节点，开始提供rpc远程网络调用服务
     void Run();
+
+private:
+    // 新的socket连接回调
+    void onConnection(const TcpConnectionPtr&);
+    // 已建立连接用户的读写事件回调
+    void onMessage(const TcpConnectionPtr&, Buffer*, Timestamp);
+
+    EventLoop _loop;
 };
