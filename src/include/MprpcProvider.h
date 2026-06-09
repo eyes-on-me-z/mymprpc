@@ -26,7 +26,7 @@ private:
     struct ServiceInfo
     {
         google::protobuf::Service *_service;    // 保存服务对象
-        std::unordered_map<std::string, google::protobuf::MethodDescriptor*> _methodMap;    // 保存服务方法
+        std::unordered_map<std::string, const google::protobuf::MethodDescriptor*> _methodMap;    // 保存服务方法
     };
 
     // 存储注册成功的服务对象和其服务方法的所有信息
