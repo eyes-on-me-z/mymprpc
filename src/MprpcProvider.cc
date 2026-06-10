@@ -1,11 +1,11 @@
 #include "MprpcProvider.h"
 #include "MprpcApplication.h"
 #include "rpcheader.pb.h"
-#include "Logger.h"
 #include "zookeeperUtil.h"
 
 #include <iostream>
 #include <mymuduo/TcpServer.h>
+#include <mymuduo/Logging.h>
 
 /*
 service_name =>  service描述   
@@ -25,8 +25,7 @@ void RpcProvider::NotifyService(google::protobuf::Service *service)
     // 获取服务对象service的方法的数量
     int methodCnt = pserviceDesc->method_count();
     
-    // std::cout << "service_name: " << service_name << std::endl;
-    LOG_INFO("service_name: %s", service_name.c_str());
+    LOG_INFO << "service_name: " << service_name;
 
     for (int i = 0; i < methodCnt; ++i)
     {
@@ -35,7 +34,7 @@ void RpcProvider::NotifyService(google::protobuf::Service *service)
         std::string method_name(pmethodDesc->name());
         serviceInfo._methodMap.insert({method_name, pmethodDesc});
 
-        LOG_INFO("method name: %s", method_name.c_str());
+        LOG_INFO << "method name: " << method_name;
     }
     serviceInfo._service = service;
     _serviceMap.insert({service_name, serviceInfo});
@@ -71,17 +70,17 @@ void RpcProvider::Run()
     for (auto &sp : _serviceMap)
     {
         // /service_name   /UserServiceRpc
-        std::string path = "/" + sp.first;
+        std::string service_path = "/" + sp.first;
         // 持久节点(0 或 ZOO_PERSISTENT)
-        zkClient.create(path.c_str(), nullptr, 0, 0);
+        zkClient.create(service_path.c_str(), nullptr, 0, 0);
         for (auto &mp : sp.second._methodMap)
         {
             // /service_name/method_name   /UserServiceRpc/Login 存储当前这个rpc服务节点主机的ip和port
-            path = path + "/" + mp.first;
+            std::string method_path = service_path + "/" + mp.first;
             char data[128] = {0};
             sprintf(data, "%s:%d", ip.c_str(), port);
             // 临时节点（Ephemeral Node）
-            zkClient.create(path.c_str(), data, strlen(data), ZOO_EPHEMERAL);
+            zkClient.create(method_path.c_str(), data, strlen(data), ZOO_EPHEMERAL);
         }
     }
 

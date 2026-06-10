@@ -7,6 +7,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <unistd.h>
 
 // header_size + service_name method_name args_size + args
 // 所有通过stub代理对象调用的rpc方法，都走到这里了，统一做rpc方法调用的数据数据序列化和网络发送
@@ -141,8 +142,7 @@ void MprpcChannel::CallMethod(const google::protobuf::MethodDescriptor* method,
     if (!response->ParseFromArray(recvBuf, recvSize))
     {
         close(clientfd);
-        char errTxt[512] = {0};
-        sprintf(errTxt, "parse error! response string: %s", recvBuf);
+        std::string errTxt = "parse error! response string: " + std::string(recvBuf);
         controller->SetFailed(errTxt);
         return;
     }

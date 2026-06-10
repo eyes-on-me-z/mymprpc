@@ -2,6 +2,7 @@
 
 #include <google/protobuf/service.h>
 
+// 应该也是给客户端使用的
 class MprpcController : public google::protobuf::RpcController
 {
 public:
@@ -13,7 +14,7 @@ public:
 
     // 目前未实现具体的功能
     void StartCancel(){}
-    bool IsCanceled() const {}
+    bool IsCanceled() const { return false; }
     void NotifyOnCancel(google::protobuf::Closure* callback) {}
 private:
     bool _failed;    // RPC方法执行过程中的状态

@@ -1,0 +1,15 @@
+16:49:58 =>[INFO]service_name: UserServiceRpc
+16:49:58 =>[INFO]method name: Login
+16:49:58 =>[INFO]method name: Register
+16:57:44 =>[INFO]service_name: UserServiceRpc
+16:57:44 =>[INFO]method name: Login
+16:57:44 =>[INFO]method name: Register
+17:0:21 =>[INFO]service_name: UserServiceRpc
+17:0:21 =>[INFO]method name: Login
+17:0:21 =>[INFO]method name: Register
+17:3:59 =>[INFO]service_name: UserServiceRpc
+17:3:59 =>[INFO]method name: Login
+17:3:59 =>[INFO]method name: Register
+17:4:17 =>[INFO]service_name: UserServiceRpc
+17:4:17 =>[INFO]method name: Login
+17:4:17 =>[INFO]method name: Register
